@@ -1,7 +1,30 @@
 import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+
+import MobileNav from './MobileNav';
 
 function Navbar() {
-  return <div>Navbar</div>;
+  return (
+    <nav className="flex-between bg-dark-1 fixed z-50 w-full px-6 py-4 lg:px-10">
+      <Link href="/" className="flex items-center gap-1">
+        <Image
+          src="/icons/logo.svg"
+          alt="Logo"
+          width={32}
+          height={32}
+          className="max-sm:size-10"
+        />
+        <p className="text-[26px] font-extrabold text-white max-sm:hidden">
+          Zoom
+        </p>
+      </Link>
+      <div className="flex-between gap-5">
+        {/* TODO: Add clerk */}
+        <MobileNav />
+      </div>
+    </nav>
+  );
 }
 
 export default Navbar;
