@@ -6,6 +6,8 @@ import type { Metadata } from 'next';
 
 import { cn } from '@/lib/utils';
 
+import { Toaster } from '@/components/ui/toaster';
+
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -38,7 +40,10 @@ export default function RootLayout({
           },
         }}
       >
-        <body className={cn('bg-dark-2', inter.className)}>{children}</body>
+        <body className={cn('bg-dark-2', inter.className)}>
+          {children}
+          <Toaster />
+        </body>
       </ClerkProvider>
     </html>
   );

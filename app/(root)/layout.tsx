@@ -1,11 +1,13 @@
 import React from 'react';
 
-type Props = {
-  children: React.ReactNode;
-};
+import StreamVideoProvider from '@/providers/StreamClientProvider';
 
-const RootLayout = ({ children }: Props) => {
-  return <main>{children}</main>;
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <main>
+      <StreamVideoProvider>{children}</StreamVideoProvider>
+    </main>
+  );
 };
 
 export default RootLayout;
