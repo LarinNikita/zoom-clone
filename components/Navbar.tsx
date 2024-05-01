@@ -1,13 +1,17 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { SignedIn, UserButton } from '@clerk/nextjs';
+import { SignedIn, UserButton, useUser } from '@clerk/nextjs';
 
 import MobileNav from './MobileNav';
 
 function Navbar() {
+  const { user } = useUser();
+
   return (
-    <nav className="flex-between bg-dark-1 fixed z-50 w-full px-6 py-4 lg:px-10">
+    <nav className="flex-between fixed z-50 w-full bg-dark-1 px-6 py-4 lg:px-10">
       <Link href="/" className="flex items-center gap-1">
         <Image
           src="/icons/logo.svg"
@@ -21,6 +25,9 @@ function Navbar() {
         </p>
       </Link>
       <div className="flex-between gap-5">
+        <p className="font-medium text-muted-foreground text-white">
+          {user?.fullName}
+        </p>
         <SignedIn>
           <UserButton />
         </SignedIn>
