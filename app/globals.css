@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+:root {
+  height: 100%;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -32,14 +38,14 @@
 
 .str-video__participant-list {
   background-color: #1c1f2e;
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
   color: white;
   height: 100%;
-}
-
-.str-video__call-controls__button {
-  height: 40px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-left: 0 !important;
 }
 
 .glassmorphism {
@@ -192,7 +198,7 @@
 
 .show-block {
   width: 100%;
-  max-width: 350px;
+  max-width: 250px;
   display: block;
   animation: show 0.7s forwards linear;
 }

@@ -1,7 +1,14 @@
 import React from 'react';
+import { Metadata } from 'next';
 
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
+
+export const metadata: Metadata = {
+  title: 'ZOOM',
+  description: 'Video calling app',
+  icons: '/icons/logo.svg',
+};
 
 type Props = {
   children: React.ReactNode;
