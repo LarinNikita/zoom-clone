@@ -1,9 +1,12 @@
 import React from 'react';
 
+import CallList from '@/components/CallList';
+
 function PreviousPage() {
   return (
     <section className="flex size-full flex-col gap-10 text-white">
-      <h1 className="text-3xl font-bold">PreviousPage</h1>
+      <h1 className="text-3xl font-bold">Previous Meetings</h1>
+      <CallList type="ended" />
     </section>
   );
 }
