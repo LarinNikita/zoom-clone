@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Call, CallRecording } from '@stream-io/video-react-sdk';
 
@@ -8,6 +8,7 @@ import { useGetCalls } from '@/hooks/useGetCalls';
 
 import MeetingCard from './MeetingCard';
 import Loader from './Loader';
+import { useToast } from './ui/use-toast';
 
 type CallListProps = {
   type: 'ended' | 'upcoming' | 'recordings';
@@ -18,6 +19,7 @@ const CallList = ({ type }: CallListProps) => {
   const { endedCalls, upcomingCalls, callRecordings, isLoading } =
     useGetCalls();
   const [recordings, setRecordings] = useState<CallRecording[]>([]);
+  const { toast } = useToast();
 
   const getCalls = () => {
     switch (type) {
@@ -47,6 +49,28 @@ const CallList = ({ type }: CallListProps) => {
     }
   };
 
+  useEffect(() => {
+    const fetchRecordings = async () => {
+      try {
+        const callData = await Promise.all(
+          callRecordings?.map(meeting => meeting.queryRecordings()) ?? [],
+        );
+
+        const recordings = callData
+          .filter(call => call.recordings.length > 0)
+          .flatMap(call => call.recordings);
+
+        setRecordings(recordings);
+      } catch (error) {
+        toast({ title: 'Try again later' });
+      }
+    };
+
+    if (type === 'recordings') {
+      fetchRecordings();
+    }
+  }, [type, callRecordings]);
+
   const calls = getCalls();
   const noCallMessage = getNoCallsMessage();
 
@@ -66,8 +90,9 @@ const CallList = ({ type }: CallListProps) => {
                   : '/icons/recordings.svg'
             }
             title={
-              (meeting as Call).state.custom.description.substring(0, 26) ||
-              'No description'
+              (meeting as Call).state?.custom?.description ||
+              (meeting as CallRecording).filename?.substring(0, 20) ||
+              'No Description'
             }
             date={
               (meeting as Call).state?.startsAt?.toLocaleString() ||
